@@ -16,3 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('home');
 });
+
+Route::view('/file-upload', 'upload');
+Route::post('/file-upload', 'GeneralController@store');
+Route::get('/view-uploads', 'GeneralController@viewUploads');
