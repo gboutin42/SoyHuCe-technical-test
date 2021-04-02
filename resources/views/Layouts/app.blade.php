@@ -10,7 +10,7 @@
 
 	</head>
 
-	<body class="bg-red-50 text-blue-500 flex flex-col min-h-screen justify-between">
+	<body class="bg-red-50 text-blue-600 flex flex-col min-h-screen justify-between">
 		@include('../inc/header')
 
 		<main role="main" class="text-center m-8">
