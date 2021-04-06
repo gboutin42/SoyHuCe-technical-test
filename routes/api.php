@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::post('upload', [FileController::class, 'upload']);
+Route::get('fileslist', [FileController::class, 'filesList']);
+Route::post('updatename', [FileController::class, 'updateName']);
+Route::post('updatesize', [FileController::class, 'updateSize']);
+Route::post('updatefilter', [FileController::class, 'updateFilter']);
+Route::post('updatesize', [FileController::class, 'updateSize']);
+Route::post('updatecrop', [FileController::class, 'updateCrop']);
