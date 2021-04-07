@@ -34,11 +34,9 @@ export default {
     },
     methods: {
         submit() {
-            console.log(process.env.BASE_URL)
             let formData = new FormData()
             formData.append('image', this.image)
-            for (var value of formData.values())
-                console.log(value)
+
             axios.post('http://localhost:8000/api/upload', formData, {
                 headers: {
                     'Content-Type': "multipart/form-data; charset=utf-8; boundary=" + Math.random().toString().substr(2)
@@ -62,10 +60,12 @@ export default {
             }
         },
         displayFiles() {
-            axios.get('http://localhost:8000/api/fileslist')
-            .then(response => {
+            axios.get('http://localhost:8000/api/fileslist', {
+                    headers: {
+                        'Content-Type': "image/*"
+                    }
+            }).then(response => {
                 this.data = response.data.result
-                console.log(this.data)
             }).catch(function(err) {
                 console.log(err)
             })

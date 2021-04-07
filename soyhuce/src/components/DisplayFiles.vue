@@ -69,7 +69,7 @@ export default {
                     'Content-Type': "multipart/form-data; charset=utf-8; boundary=" + Math.random().toString().substr(2)
                 }
             }).then(response => {
-                console.log(response)
+                console.log("file update with code " + response.status)
             }).catch(err => {
                 console.log(err)
             })
