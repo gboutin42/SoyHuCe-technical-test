@@ -25,9 +25,21 @@
             </section>
 
             <section class="mx-auto mt-3 text-center flex flex-col">
-                <h3>Redimensionner</h3>
+                <h3>Recadrer</h3>
                 <div  class="flex m-auto px-6">
                     <input type="range" step="1" name="range" id="range" class="bg-green-400 w-36">
+                </div>
+            </section>
+
+            <section class="mx-auto mt-3 text-center flex flex-col">
+                <h3>Recadrer</h3>
+                <div class="flex flex-row my-1">
+                    <div class="text-sm border boreder-2 rounded-l px-1.5 py-0.5 bg-blue-600 whitespace-no-wrap">Long.</div>
+                    <input name="width" type="text" placeholder="Longueur" class="text-right border border-2 rounded-r px-1.5 py-0.5 w-full">.px
+                </div>
+                <div class="flex flex-row my-1">
+                    <div class="text-sm border boreder-2 rounded-l px-1.5 py-0.5 bg-blue-600 whitespace-no-wrap">Haut.</div>
+                    <input name="height" type="text" placeholder="Hauteur" class="text-right border border-2 rounded-r px-1.5 py-0.5 w-full">.px
                 </div>
             </section>
 
@@ -76,7 +88,7 @@ export default {
             let formData = new FormData()
             formData.append('name', this.nameWithExtension)
             formData.append('filter', this.filterResult)
-            axios.post('http://localhost:80/SoyHuCe-technical-test/public/api/updatefilter', formData, {
+            axios.post('http://localhost:8000/api/updatefilter', formData, {
                 headers: {
                     'Content-Type': "multipart/form-data; charset=utf-8; boundary=" + Math.random().toString().substr(2)
                 }
@@ -91,7 +103,7 @@ export default {
         },
         download() {
             axios.get(
-                "http://localhost:80/SoyHuCe-technical-test/public/api/downloadfile/" + this.nameWithExtension,{
+                "http://localhost:8000/api/downloadfile/" + this.nameWithExtension,{
                 responseType: 'blob'
             }).then(response => {
                 const type = response.headers['content-type']

@@ -31,9 +31,9 @@ export default {
         }
     },
     mounted() {
-        axios.get('http://localhost:80/SoyHuCe-technical-test/public/api/fileslist', {
+        axios.get('http://localhost:8000/api/fileslist', {
             headers: {
-                'Content-type': 'application/json',
+                'Content-type': 'image/*',
             }
         }).then(response => {
             var data = []
@@ -43,7 +43,7 @@ export default {
                 data.push(
                     {
                         name: name,
-                        path: "http://localhost:80/SoyHuCe-technical-test/storage/app/" + value,
+                        path: "/" + value,
                         button: "modifyImage_" + key
                     }
                 )
@@ -64,7 +64,7 @@ export default {
             formData.append('oldName', oldName)
             formData.append('newName', newName)
 
-            axios.post('http://localhost:80/SoyHuCe-technical-test/public/api/updatename', formData, {
+            axios.post('http://localhost:8000/api/updatename', formData, {
                 headers: {
                     'Content-Type': "multipart/form-data; charset=utf-8; boundary=" + Math.random().toString().substr(2)
                 }

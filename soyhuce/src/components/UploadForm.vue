@@ -10,9 +10,9 @@
 			<form>
 				<div>
 					<label for="image">Choisissez des Images</label>
-					<input type="file" accept="image/*" multiple="multiple" id="image" name="image" ref="image" @change="handleFileObject()">
+					<input type="file" accept="image/*" id="image" name="image" ref="image" @change="handleFileObject()">
 				</div>
-				<button @click="submit" type="submit" class="focus:outline-none text-sm py-2.5 px-5 rounded-md bg-green-600 hover:bg-green-800 transform hover:scale-110 hover:shadow-lg mt-5">Importer</button>
+				<button @click="submit" type="submit" class="opacity-50 cursor-not-allowed focus:outline-none text-sm py-2.5 px-5 rounded-md bg-green-600 mt-5">Importer</button>
 			</form>
 		</div>
 
@@ -29,16 +29,17 @@ export default {
     data() {
         return {
             image: null,
-            imageName: null
+            imageName: null,
         }
     },
     methods: {
         submit() {
+            console.log(process.env.BASE_URL)
             let formData = new FormData()
             formData.append('image', this.image)
             for (var value of formData.values())
                 console.log(value)
-            axios.post('http://localhost:80/SoyHuCe-technical-test/public/api/upload', formData, {
+            axios.post('http://localhost:8000/api/upload', formData, {
                 headers: {
                     'Content-Type': "multipart/form-data; charset=utf-8; boundary=" + Math.random().toString().substr(2)
                 }
@@ -53,14 +54,16 @@ export default {
         },
         handleFileObject() {
             this.image = this.$refs.image.files[0]
-            this.imageName = this.image.name
+            if (this.image){
+                this.imageName = this.image.name
+                var button = document.getElementsByTagName('button')[0]
+                button.classList.remove("opacity-50", "cursor-not-allowed")
+                button.classList.add("hover:bg-green-800", "transform", "hover:scale-110", "hover:shadow-lg")
+            }
         },
         displayFiles() {
-            axios.get('http://localhost:80/SoyHuCe-technical-test/public/api/fileslist', {
-                headers: {
-                    'Content-type': 'application/json',
-                }
-            }).then(response => {
+            axios.get('http://localhost:8000/api/fileslist')
+            .then(response => {
                 this.data = response.data.result
                 console.log(this.data)
             }).catch(function(err) {
