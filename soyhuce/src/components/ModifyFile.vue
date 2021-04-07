@@ -83,15 +83,13 @@ export default {
             }).then(response => {
                 if (response.status == 200) {
                     console.log("file update with code " + response.status)
-                    this.displayFiles()
+                    // this.displayFiles()
                 }
             }).catch(err => {
                     console.log(err)
             })
         },
         download() {
-            console.log(this.nameWithExtension)
-
             axios.get(
                 "http://localhost:80/SoyHuCe-technical-test/public/api/downloadfile/" + this.nameWithExtension,{
                 responseType: 'blob'
