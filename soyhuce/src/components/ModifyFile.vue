@@ -27,7 +27,7 @@
             <section class="mx-auto mt-3 text-center flex flex-col">
                 <h3>Redimensionner</h3>
                 <div  class="flex m-auto px-6">
-                    <input type="range" step="1" name="range" id="range" v-bind:min="min" v-bind:max="max" v-model="minSize" class="bg-green-400 w-36">
+                    <input type="range" step="1" name="range" id="range" class="bg-green-400 w-36">
                 </div>
             </section>
 
@@ -38,11 +38,7 @@
 
         <div class="flex">
             <button @click="save" class="mx-auto focus:outline-none text-sm py-2.5 px-5 rounded-md bg-green-600 hover:bg-green-800 transform hover:scale-110 hover:shadow-lg mt-5">Enregistrer</button>
-            <button @click="download" class="mx-auto focus:outline-none text-sm py-2.5 px-5 rounded-md bg-green-600 hover:bg-green-800 transform hover:scale-110 hover:shadow-lg mt-5">
-                <!-- <a href="" download > -->
-                    Télécharger
-                <!-- </a> -->
-            </button>
+            <button @click="download" class="mx-auto focus:outline-none text-sm py-2.5 px-5 rounded-md bg-green-600 hover:bg-green-800 transform hover:scale-110 hover:shadow-lg mt-5">Télécharger</button>
         </div>
 
     </div>
@@ -80,7 +76,6 @@ export default {
             let formData = new FormData()
             formData.append('name', this.nameWithExtension)
             formData.append('filter', this.filterResult)
-
             axios.post('http://localhost:80/SoyHuCe-technical-test/public/api/updatefilter', formData, {
                 headers: {
                     'Content-Type': "multipart/form-data; charset=utf-8; boundary=" + Math.random().toString().substr(2)
@@ -95,20 +90,19 @@ export default {
             })
         },
         download() {
-            let formData = new FormData()
-            formData.append('name', this.nameWithExtension)
             console.log(this.nameWithExtension)
 
-            for (var value of formData.values())
-                console.log(value)
             axios.get(
-                "http://localhost:80/SoyHuCe-technical-test/public/api/downloadfile",
-                formData, {
-                headers: {
-                    'Content-Type': "multipart/form-data; charset=utf-8; boundary=" + Math.random().toString().substr(2)
-                }
+                "http://localhost:80/SoyHuCe-technical-test/public/api/downloadfile/" + this.nameWithExtension,{
+                responseType: 'blob'
             }).then(response => {
-                console.log("ok " , response)
+                const type = response.headers['content-type']
+                const blob = new Blob([response.data], {type: type, encoding: 'UTF-8'})
+
+                const link = document.createElement('a')
+                link.href = window.URL.createObjectURL(blob)
+                link.download = this.shortName
+                link.click()
             }).catch(err => {
                 console.log(err)
             })

@@ -31,6 +31,8 @@ export default {
         }
     },
     mounted() {
+        console.log(this.$url)
+
         axios.get('http://localhost:80/SoyHuCe-technical-test/public/api/fileslist', {
             headers: {
                 'Content-type': 'application/json',

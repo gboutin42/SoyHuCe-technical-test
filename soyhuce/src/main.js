@@ -13,8 +13,9 @@ new Vue({
 Vue.use(VueAxios, axios)
 
 const axiosConfig = {
-    url: 'http://localhost:80/SoyHuCe-technical-test/public/api',
+    baseUrl: 'http://localhost:80/SoyHuCe-technical-test/public/api',
 }
-axios.defaults.url = 'http://localhost:80/SoyHuCe-technical-test/public/api'
+axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
+axios.defaults.baseUrl = 'http://localhost:80/SoyHuCe-technical-test/public/api'
 
 Vue.prototype.$axios= axios.create(axiosConfig)
