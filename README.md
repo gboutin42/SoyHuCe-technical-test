@@ -4,25 +4,26 @@
 	This is a Laravel application
 </h1>
 
-## First: install API and launch him
-
 # Back is dev with Laravel.8
 
-## Project setup
+## First: install API and launch him
 
+## Project setup
+```
 composer install
 npm install
 php artisan storage:link
+```
 
 ### Compiles for development
-
+```
 php artisan serve
-
+```
 Starting Laravel development server: http://localhost:8000
 
-## Second: install front and launch him on other terminal
-
 # Front is dev with VueJs
+
+## Second: install front and launch him on other terminal
 
 ## Project setup
 ```
@@ -34,7 +35,7 @@ npm install
 ```
 npm run serve
 ```
-http://localhost:8080/ 
+Starting VueJs development server: http://localhost:8080/ 
 
 ## About Laravel
 
