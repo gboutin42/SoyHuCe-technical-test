@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Image\Image;
 
@@ -12,7 +13,7 @@ class FileController extends Controller
 	function upload(Request $request)
 	{
 		$result = $request->file('image')
-                    ->storeAs('public/images',
+                    ->storePubliclyAs('public/images',
                                 $request->file('image')
                                     ->getClientOriginalName());
 		return ['result' => $result];
@@ -20,7 +21,7 @@ class FileController extends Controller
 
 	function filesList()
 	{
-		$result = Storage::allFiles('images');
+		$result = Storage::allFiles('public/images');
 		return ['result' => $result];
 	}
 
@@ -28,8 +29,8 @@ class FileController extends Controller
     {
         if ($request->oldName && $request->newName)
         {
-            $oldPath =  "images/" . $request->oldName;
-            $newPath =  "images/" . $request->newName;
+            $oldPath =  "public/images/" . $request->oldName;
+            $newPath =  "public/images/" . $request->newName;
             $image = Storage::move($oldPath, $newPath);
             // $image = Image::load($oldPath)->save($newPath);
 
@@ -43,7 +44,7 @@ class FileController extends Controller
 
     function updateSize(Request $request)
     {
-        $pathName = "images/" . $request->name;
+        $pathName = "public/images/" . $request->name;
         Image::load($pathName)
                 ->width($request->width)
                 ->height($request->height)
@@ -52,7 +53,7 @@ class FileController extends Controller
 
     function updateCrop(Request $request)
     {
-        $pathName = "images/" . $request->name;
+        $pathName = "public/images/" . $request->name;
         Image::load($pathName)
                 ->manualCrop($request->width, $request->height,
                                 $request->startX, $request->startY)
@@ -61,7 +62,7 @@ class FileController extends Controller
 
     function updateFilter(Request $request)
     {
-        $name = "images/" . $request->name;
+        $name = "punlic/images/" . $request->name;
         $image = Image::load($name);
         if ($request->filter == "sepia")
         {
@@ -72,5 +73,15 @@ class FileController extends Controller
             $image->greyscale();
         }
         $image->save();
+    }
+
+    function downloadFile(Request $request)
+    {
+        $name = $request->name;
+        $path = storage_path() . '/app/public/images/coucou2.PNG' . $name;
+        $headers = array(
+            'Content-Type' => 'image/' . Storage::extension("public/images/coucou2.PNG"),
+          );
+        return response()->download($path, "coucou.png");
     }
 }
