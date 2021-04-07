@@ -4,6 +4,10 @@
 	This is a Laravel application
 </h1>
 
+## Require
+
+For this project you need to have already install composer, npm and PHP on your environnement
+
 # Back is dev with Laravel.8
 
 ## First: install API and launch him
@@ -23,7 +27,7 @@ Starting Laravel development server: http://localhost:8000
 
 # Front is dev with VueJs
 
-## Second: install front and launch him on other terminal
+## Second: install front and launch him on an other terminal command
 
 ## Project setup
 ```
