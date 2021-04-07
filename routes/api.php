@@ -21,4 +21,4 @@ Route::post('updatesize', [FileController::class, 'updateSize']);
 Route::post('updatefilter', [FileController::class, 'updateFilter']);
 Route::post('updatesize', [FileController::class, 'updateSize']);
 Route::post('updatecrop', [FileController::class, 'updateCrop']);
-Route::get('downloadfile', [FileController::class, 'downloadFile']);
+Route::get('downloadfile/{fileName}', [FileController::class, 'downloadFile']);

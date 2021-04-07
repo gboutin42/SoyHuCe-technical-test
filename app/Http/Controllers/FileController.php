@@ -29,10 +29,13 @@ class FileController extends Controller
     {
         if ($request->oldName && $request->newName)
         {
-            $oldPath =  "public/images/" . $request->oldName;
-            $newPath =  "public/images/" . $request->newName;
-            $image = Storage::move($oldPath, $newPath);
-            // $image = Image::load($oldPath)->save($newPath);
+            // $oldPath =  "public/images/" . $request->oldName;
+            // $newPath =  "public/images/" . $request->newName;
+            // $image = Storage::move($oldPath, $newPath);
+
+            $oldPath = storage_path() . "/app/public/images/" . $request->oldName;
+            $newPath = storage_path() . "/app/public/images/" . $request->newName;
+            $image = Image::load($oldPath)->save($newPath);
 
             return ['result' => $image];
         }
@@ -44,7 +47,7 @@ class FileController extends Controller
 
     function updateSize(Request $request)
     {
-        $pathName = "public/images/" . $request->name;
+        $pathName = storage_path() . "/app/public/images/" . $request->name;
         Image::load($pathName)
                 ->width($request->width)
                 ->height($request->height)
@@ -53,7 +56,7 @@ class FileController extends Controller
 
     function updateCrop(Request $request)
     {
-        $pathName = "public/images/" . $request->name;
+        $pathName = storage_path() . "/app/public/images/" . $request->name;
         Image::load($pathName)
                 ->manualCrop($request->width, $request->height,
                                 $request->startX, $request->startY)
@@ -62,7 +65,7 @@ class FileController extends Controller
 
     function updateFilter(Request $request)
     {
-        $name = "punlic/images/" . $request->name;
+        $name = storage_path() . "/app/public/images/" . $request->name;
         $image = Image::load($name);
         if ($request->filter == "sepia")
         {
@@ -73,15 +76,16 @@ class FileController extends Controller
             $image->greyscale();
         }
         $image->save();
+
+        return ["result" => $image];
     }
 
-    function downloadFile(Request $request)
+    function downloadFile($fileName)
     {
-        $name = $request->name;
-        $path = storage_path() . '/app/public/images/coucou2.PNG' . $name;
+        $path = storage_path() . '/app/public/images/' . $fileName;
         $headers = array(
-            'Content-Type' => 'image/' . Storage::extension("public/images/coucou2.PNG"),
+            'Content-Type' => 'image/*'
           );
-        return response()->download($path, "coucou.png");
+        return response()->download($path, $fileName, $headers);
     }
 }
