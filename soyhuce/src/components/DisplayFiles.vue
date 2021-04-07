@@ -31,8 +31,6 @@ export default {
         }
     },
     mounted() {
-        console.log(this.$url)
-
         axios.get('http://localhost:80/SoyHuCe-technical-test/public/api/fileslist', {
             headers: {
                 'Content-type': 'application/json',
@@ -58,7 +56,7 @@ export default {
     methods: {
         inputName: function(event) {
             var element = document.getElementById(event.srcElement.id)
-            var oldName = element.nextSibling.nextSibling.getAttribute('src').split('/').pop()
+            var oldName = element.nextSibling.getAttribute('src').split('/').pop()
             var extension = oldName.split('.').pop()
             var newName = element.innerText + "." + extension
 
