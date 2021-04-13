@@ -29,8 +29,13 @@ class FileController extends Controller
 	function filesList()
 	{
         try {
-            $result = Storage::allFiles('public/images');
-            return ['result' => $result];
+            $files = Storage::files('public/images');
+            $results = array();
+            foreach ($files as $file)
+            {
+                $results[] = Storage::url($file);
+            }
+            return ['result' => $results];
         }
         catch (Exception $e)
         {
@@ -128,7 +133,7 @@ class FileController extends Controller
         {
             if ($req && $req->fileName && $req->filter)
             {
-                $path = storage_path() . "/app/public/images/" . $req->fileName;
+                $path = storage_path() . '/app/public/images/' . $req->fileName;
                 $image = Image::load($path);
 
                 // check match filter
@@ -141,6 +146,7 @@ class FileController extends Controller
                     $image->greyscale();
                 }
                 $image->save();
+                return ["result" => $path];
             }
             else
             {
