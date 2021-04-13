@@ -12,7 +12,6 @@ class FileController extends Controller
 	// For upload new file and store on the server
 	function upload(Request $request)
 	{
-        // return ['result' => $request->name];
 		try {
             $result = $request->file('image')
                         ->storePubliclyAs('public/images',
@@ -146,7 +145,6 @@ class FileController extends Controller
                     $image->greyscale();
                 }
                 $image->save();
-                return ["result" => $path];
             }
             else
             {
