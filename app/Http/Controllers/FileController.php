@@ -51,7 +51,7 @@ class FileController extends Controller
             {
                 $oldPath =  "public/images/" . $req->oldName;
                 $newPath =  "public/images/" . $req->newName;
-                $image = Storage::move($oldPath, $newPath);
+                Storage::move($oldPath, $newPath);
 
                 /*
                  * The following method is not used because the save method with
