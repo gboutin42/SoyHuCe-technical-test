@@ -33,17 +33,19 @@ export default {
     mounted() {
         axios.get('http://localhost:8000/api/fileslist', {
             headers: {
-                'Content-type': 'image/*',
+                'Accept': '*/*',
+                'Content-Type': 'text/html; charset=utf-8',
             }
         }).then(response => {
             var data = []
             response.data.result.forEach(function(value, key) {
+                console.log(value)
                 var split = value.split('/')
                 var name = split[split.length - 1].split('.')[0]
                 data.push(
                     {
                         name: name,
-                        path: "/" + value,
+                        path: "http://localhost:8000" + value,
                         button: "modifyImage_" + key
                     }
                 )

@@ -86,11 +86,15 @@ export default {
         },
         save() {
             let formData = new FormData()
-            formData.append('name', this.nameWithExtension)
+
+            console.log(this.nameWithExtension)
+            formData.append('fileName', this.nameWithExtension)
             formData.append('filter', this.filterResult)
             axios.post('http://localhost:8000/api/updatefilter', formData, {
                 headers: {
-                    'Content-Type': "multipart/form-data; charset=utf-8; boundary=" + Math.random().toString().substr(2)
+                    'Accept': '*/*',
+                    'Content-Type': 'text/html; charset=utf-8',
+                    // 'Content-Type': "multipart/form-data; charset=utf-8; boundary=" + Math.random().toString().substr(2)
                 }
             }).then(response => {
                 if (response.status == 200) {
